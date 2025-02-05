@@ -1,0 +1,14 @@
+npm create vite@latest
+npm install
+npm install tailwindcss @tailwindcss/vite
+npm run dev
+
+git init
+git remote add origin https://github.com/pramod24cr/NetflixGPT.git
+git branch -M main
+git push -u origin main
+
+git status
+git add .
+git commit -m "Initial Commit"
+git push -u origin main
