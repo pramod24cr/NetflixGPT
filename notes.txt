@@ -14,3 +14,13 @@ git commit -m "Initial Commit"
 git push -u origin main
 
 npm i -D react-router-dom
+npm install firebase
+npm install -g firebase-tools
+
+firebase login (02.10)
+firebase init // What do you want to use as your public directory ? dist
+firebase deploy
+
+npm i -D @reduxjs/toolkit
+npm install react-redux
+
