@@ -14,7 +14,7 @@ const VideoBackground = ({ movieId }) => {
         src={
           "https://www.youtube.com/embed/" +
           trailerVideo?.key +
-          "?&autoplay=1&mute=1&amp;controls=0"
+          "?&autoplay=1&mute=1&amp;controls=0&loop=1"
         }
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -24,7 +24,7 @@ const VideoBackground = ({ movieId }) => {
 };
 
 VideoBackground.propTypes = {
-    movieId: PropTypes.string.isRequired,
+    movieId: PropTypes.number.isRequired,
   };
 
 export default VideoBackground;
