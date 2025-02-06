@@ -1,29 +1,53 @@
-/* eslint-disable no-unused-vars */
-import { signOut } from "firebase/auth";
-import { useSelector } from "react-redux";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { NETFLIX_LOGO } from "../utils/constants";
 import { auth } from "../utils/firebase";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
 
-  // Constants
-  const NETFLIX_LOGO_URL =
-    "https://help.nflxext.com/helpcenter/OneTrust/oneTrust_production/consent/87b6a5c0-0104-4e96-a291-092c11350111/01938dc4-59b3-7bbc-b635-c4131030e85f/logos/dd6b162f-1a32-456a-9cfe-897231c7763c/4345ea78-053c-46d2-b11e-09adaef973dc/Netflix_Logo_PMS.png";
-
   const handleSignOut = () => {
     signOut(auth)
-      .then(() => navigate("/"))
-      .catch(() => navigate("/error"));
+      .then(() => {})
+      .catch(() => {
+        navigate("/error");
+      });
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName, photoURL } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/");
+      }
+    });
+
+    // Unsiubscribe when component unmounts
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="fixed top-0 left-0 w-full px-4 md:px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between items-center">
       {/* Netflix Logo */}
       <img
         className="w-24 md:w-36 cursor-pointer"
-        src={NETFLIX_LOGO_URL}
+        src={NETFLIX_LOGO}
         alt="Netflix Logo"
         onClick={() => navigate("/browse")}
         aria-label="Netflix Logo"

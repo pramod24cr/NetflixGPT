@@ -7,30 +7,39 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { USER_AVATAR, NETFLIX_BACKGROUND } from "../utils/constants";
 import { getAuthErrorMessage } from "../utils/errorMessages";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const name = useRef(null);
-  const email = useRef(null);
-  const password = useRef(null);
-  const confirmPassword = useRef(null);
+  const formRefs = {
+    name: useRef(null),
+    email: useRef(null),
+    password: useRef(null),
+    confirmPassword: useRef(null),
+  };
 
   const handleButtonClick = async () => {
+    const email = formRefs.email.current.value.trim();
+    const password = formRefs.password.current.value.trim();
+    const confirmPassword = formRefs.confirmPassword?.current?.value?.trim();
+    const name = formRefs.name?.current?.value?.trim();
+
     // Validate input fields
-    const validationMessage = checkValidData(email.current.value, password.current.value);
+    const validationMessage = checkValidData(email, password);
     if (validationMessage) {
       setErrorMessage(validationMessage);
       return;
     }
 
     // Check if passwords match during sign-up
-    if (!isSignInForm && password.current.value !== confirmPassword.current.value) {
+    if (!isSignInForm && password !== confirmPassword) {
       setErrorMessage("Passwords do not match.");
       return;
     }
@@ -41,28 +50,27 @@ const Login = () => {
     try {
       if (!isSignInForm) {
         // Sign Up Logic
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email.current.value,
-          password.current.value
-        );
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         await updateProfile(user, {
-          displayName: name.current.value,
-          photoURL: "https://avatars.githubusercontent.com/u/63894299?v=4",
+          displayName: name,
+          photoURL: USER_AVATAR,
         });
 
-        navigate("/browse");
+        const { uid, displayName, photoURL } = auth.currentUser;
+        dispatch(
+          addUser({
+            uid,
+            email,
+            displayName,
+            photoURL,
+          })
+        );
       } else {
         // Sign In Logic
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email.current.value,
-          password.current.value
-        );
-        console.log("Signed in user:", userCredential.user); 
-        navigate("/browse");
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log("Signed in user:", userCredential.user);
       }
     } catch (error) {
       console.error("Firebase Auth Error:", error);
@@ -74,7 +82,7 @@ const Login = () => {
 
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
-    setErrorMessage(null); // Clear error message when toggling forms
+    setErrorMessage(null);
   };
 
   return (
@@ -83,7 +91,7 @@ const Login = () => {
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/fb5cb900-0cb6-4728-beb5-579b9af98fdd/web/IN-en-20250127-TRIFECTA-perspective_cf66f5a3-d894-4185-9106-5f45502fc387_medium.jpg"
+          src={NETFLIX_BACKGROUND}
           alt="Netflix Background"
           className="w-full h-full object-cover"
         />
@@ -102,7 +110,7 @@ const Login = () => {
         <div className="flex flex-col space-y-4">
           {!isSignInForm && (
             <input
-              ref={name}
+              ref={formRefs.name}
               type="text"
               placeholder="Full Name"
               aria-label="Full Name"
@@ -111,7 +119,7 @@ const Login = () => {
             />
           )}
           <input
-            ref={email}
+            ref={formRefs.email}
             type="email"
             placeholder="Email Address"
             aria-label="Email Address"
@@ -119,7 +127,7 @@ const Login = () => {
             required
           />
           <input
-            ref={password}
+            ref={formRefs.password}
             type="password"
             placeholder="Password"
             aria-label="Password"
@@ -128,7 +136,7 @@ const Login = () => {
           />
           {!isSignInForm && (
             <input
-              ref={confirmPassword}
+              ref={formRefs.confirmPassword}
               type="password"
               placeholder="Confirm Password"
               aria-label="Confirm Password"
