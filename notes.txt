@@ -24,3 +24,5 @@ firebase deploy
 npm i -D @reduxjs/toolkit
 npm install react-redux
 
+npm install openai
+

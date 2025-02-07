@@ -9,13 +9,17 @@ export const USER_AVATAR =
 
 export const MOVIE_IMG_CDN = "https://image.tmdb.org/t/p/w500";
 
+
+export const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+
 export const API_OPTIONS = {
-  method: 'GET',
+  method: "GET",
   headers: {
-    accept: 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0YTBlYjdlYmExMWUwZDU5ZTJkZGM2NzgzYTFiMDcyNyIsIm5iZiI6MTYwNTYxOTUxOC44NjYsInN1YiI6IjVmYjNjZjNlZWM0NTUyMDA0MGZkYjBjMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.mWLcMPPi8Q1aoU_mUZfmzsw4WaHvCx2DtAFKmVOZLVI'
-  }
+    accept: "application/json",
+    Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
+  },
 };
+
 
 export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },
