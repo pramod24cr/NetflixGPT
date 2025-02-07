@@ -54,10 +54,10 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full px-4 md:px-8 py-2 bg-gradient-to-b from-black z-10 flex justify-between items-center">
+    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
       {/* Netflix Logo */}
       <img
-        className="w-24 md:w-36 cursor-pointer"
+        className="w-44 mx-auto md:mx-0"
         src={NETFLIX_LOGO}
         alt="Netflix Logo"
         onClick={() => navigate("/browse")}
@@ -66,8 +66,8 @@ const Header = () => {
 
       {/* User Profile & Sign Out */}
       {user && (
-        <div className="flex items-center gap-2 md:gap-4">
-                    {showGptSearch && (
+        <div className="flex p-2 justify-between">
+          {showGptSearch && (
             <select
               className="p-2 m-2 bg-gray-900 text-white"
               onChange={handleLanguageChange}
@@ -86,7 +86,7 @@ const Header = () => {
             {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
           <img
-            className="w-8 h-8 md:w-12 md:h-12 rounded-full border border-gray-400"
+            className="hidden md:block w-8 h-8 md:w-12 md:h-12 rounded-full border border-gray-400"
             alt="User Icon"
             src={user?.photoURL || "https://picsum.photos/200/300"}
             aria-label="User Profile"
