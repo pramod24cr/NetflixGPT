@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addSelectedMovie } from "../utils/moviesSlice";
+import { useEffect } from "react";
+import { addSelectedMovie, setWatchlist } from "../utils/moviesSlice";
 import MovieDetails from "./MovieDetails";
 import { NETFLIX_BACKGROUND } from "../utils/constants";
 import lang from "../utils/languageConstants";
-
 
 const Watchlist = () => {
   const dispatch = useDispatch();
@@ -11,6 +11,16 @@ const Watchlist = () => {
   const selectedMovie = useSelector((store) => store.movies.selectedMovie);
   const langKey = useSelector((store) => store.config.lang);
 
+  useEffect(() => {
+    const storedWatchlist = localStorage.getItem("watchlist");
+    if (storedWatchlist) {
+      dispatch(setWatchlist(JSON.parse(storedWatchlist)));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  }, [watchlist]);
 
   return (
     <div className="relative min-h-screen text-white flex flex-col items-center justify-center px-6">

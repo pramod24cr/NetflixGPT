@@ -13,7 +13,6 @@ const GptSearchBar = () => {
 
   const searchText = useRef(null);
 
-  // Search movie in TMDB
   const searchMovieTMDB = async (movie) => {
     try {
       const response = await fetch(
@@ -24,18 +23,19 @@ const GptSearchBar = () => {
       );
       const json = await response.json();
   
-      // Filter results to find exact match
-      const exactMatch = json.results.filter(
+      // Find exact match and return only the first one
+      const exactMatch = json.results.find(
         (item) => item.title.toLowerCase() === movie.toLowerCase()
       );
   
-      return exactMatch.length > 0 ? exactMatch : [];
+      return exactMatch ? [exactMatch] : [];
     } catch (error) {
       console.error("TMDB API Error:", error);
       setError("Failed to fetch movie data. Please try again.");
       return [];
     }
   };
+  
   
   const handleGptSearchClick = async () => {
     const query = searchText.current.value.trim();
@@ -77,7 +77,7 @@ const GptSearchBar = () => {
   };
 
   return (
-    <div className="pt-[35%] md:pt-[10%] flex justify-center">
+    <div className="pt-[30%] md:pt-[7%] flex justify-center">
       <form
         className="w-full md:w-1/2 bg-black grid grid-cols-12 rounded-lg"
         onSubmit={(e) => e.preventDefault()}
@@ -96,7 +96,7 @@ const GptSearchBar = () => {
           disabled={isLoading}
           aria-label="Search"
         >
-          {isLoading ? "Searching..." : lang[langKey].search}
+          {isLoading ? lang[langKey].searching : lang[langKey].search}
         </button>
       </form>
       {error && (

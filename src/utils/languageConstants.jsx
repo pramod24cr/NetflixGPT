@@ -6,6 +6,7 @@ const lang = {
     // GptSearchBar
     search: "Search",
     gptSearchPlaceholder: "What would you like to watch today?",
+    searching: "Searching...",
 
     //Header
     askGPT: "Ask GPT",
@@ -42,7 +43,7 @@ const lang = {
     // GptSearchBar
     search: "ಹುಡುಕು",
     gptSearchPlaceholder: "ನೀವು ಇಂದು ಏನನ್ನು ವೀಕ್ಷಿಸಲು ಬಯಸುತ್ತೀರಿ?",
-
+    searching: "ಹುಡುಕುತ್ತಿದ್ದೇನೆ...",
   
     //Header
     askGPT: "GPT ಕೇಳಿ",

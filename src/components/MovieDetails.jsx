@@ -19,7 +19,7 @@ const MovieDetails = () => {
   const isWatchlisted = watchlist.some((movie) => movie.id === id);
 
   return (
-    <div className="fixed inset-0 bg-black/90 backdrop-blur-lg flex justify-center items-center p-4 z-50">
+    <div className="fixed inset-0 backdrop-blur-lg flex justify-center items-center p-4 z-50">
       <div className="relative bg-gray-900 text-white rounded-lg shadow-xl p-6 w-full max-w-3xl">
         {/* Close Button */}
         <button

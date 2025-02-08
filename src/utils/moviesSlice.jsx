@@ -1,5 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Load watchlist from localStorage if available
+const storedWatchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+
 const moviesSlice = createSlice({
   name: "movies",
   initialState: {
@@ -10,7 +13,7 @@ const moviesSlice = createSlice({
     upcomingMovies: null,
     popularMovies: null,
     selectedMovie: null,
-    watchlist: [],
+    watchlist: storedWatchlist,
   },
   reducers: {
     addTrailerVideo: (state, action) => {
@@ -38,10 +41,15 @@ const moviesSlice = createSlice({
       const movie = action.payload;
       if (!state.watchlist.some((m) => m.id === movie.id)) {
         state.watchlist.push(movie);
+        localStorage.setItem("watchlist", JSON.stringify(state.watchlist));
       }
     },
     removeFromWatchlist: (state, action) => {
       state.watchlist = state.watchlist.filter((m) => m.id !== action.payload);
+      localStorage.setItem("watchlist", JSON.stringify(state.watchlist));
+    },
+    setWatchlist: (state, action) => {
+      state.watchlist = action.payload;
     },
   },
 });
@@ -55,7 +63,8 @@ export const {
   addPopularMovies, 
   addSelectedMovie,
   addToWatchlist,
-  removeFromWatchlist
+  removeFromWatchlist,
+  setWatchlist
 } = moviesSlice.actions;
 
 export default moviesSlice.reducer;
