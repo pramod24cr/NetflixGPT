@@ -17,6 +17,7 @@
     "openai": "^4.83.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-loader-spinner": "^6.1.6",
     "react-redux": "^9.2.0",
     "tailwindcss": "^4.0.3"
   },

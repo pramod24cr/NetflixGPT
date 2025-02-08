@@ -9,7 +9,8 @@ const moviesSlice = createSlice({
     topRatedMovies: null,
     upcomingMovies: null,
     popularMovies: null,
-    selectedMovie: null, // ✅ Add this to store selected movie
+    selectedMovie: null,
+    watchlist: [],
   },
   reducers: {
     addTrailerVideo: (state, action) => {
@@ -31,7 +32,16 @@ const moviesSlice = createSlice({
       state.popularMovies = action.payload;
     },
     addSelectedMovie: (state, action) => {
-      state.selectedMovie = action.payload; // ✅ Store selected movie
+      state.selectedMovie = action.payload;
+    },
+    addToWatchlist: (state, action) => {
+      const movie = action.payload;
+      if (!state.watchlist.some((m) => m.id === movie.id)) {
+        state.watchlist.push(movie);
+      }
+    },
+    removeFromWatchlist: (state, action) => {
+      state.watchlist = state.watchlist.filter((m) => m.id !== action.payload);
     },
   },
 });
@@ -43,7 +53,9 @@ export const {
   addTopRatedMovies, 
   addUpcomingMovies, 
   addPopularMovies, 
-  addSelectedMovie // ✅ Export this action
+  addSelectedMovie,
+  addToWatchlist,
+  removeFromWatchlist
 } = moviesSlice.actions;
 
 export default moviesSlice.reducer;

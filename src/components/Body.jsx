@@ -1,24 +1,28 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Browse from "./Browse";
 import Login from "./Login";
-import { RouterProvider } from "react-router-dom";
+import GPTSearch from "./GptSearch";
+import Watchlist from "./Watchlist";
+import Layout from "./Layout"; // Import Layout component
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/",
+    element: <Layout />, // Wrap all routes with Layout
+    children: [
+      { path: "browse", element: <Browse /> },
+      { path: "watchlist", element: <Watchlist /> },
+      { path: "gpt-search", element: <GPTSearch /> },
+    ],
+  },
+]);
 
 const Body = () => {
-  const appRouter = createBrowserRouter([
-    {
-      path: "/",
-      element: <Login />,
-    },
-    {
-      path: "/browse",
-      element: <Browse />,
-    },
-  ]);
-
-  return (
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
-  );
+  return <RouterProvider router={appRouter} />;
 };
+
 export default Body;

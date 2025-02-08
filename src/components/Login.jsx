@@ -7,16 +7,20 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector  } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { USER_AVATAR, NETFLIX_BACKGROUND } from "../utils/constants";
 import { getAuthErrorMessage } from "../utils/errorMessages";
+import lang from "../utils/languageConstants";
+
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const langKey = useSelector((store) => store.config.lang);
+
 
   const formRefs = {
     name: useRef(null),
@@ -103,7 +107,7 @@ const Login = () => {
         className="w-full md:w-3/12 absolute p-8 md:p-12 bg-black/80 text-white rounded-lg my-24 mx-auto right-0 left-0"
       >
         <h1 className="font-bold text-3xl py-4 text-center">
-          {isSignInForm ? "Sign In" : "Sign Up"}
+          {isSignInForm ? lang[langKey].signIn : lang[langKey].signUp}
         </h1>
 
         {/* Input Fields */}
@@ -112,7 +116,7 @@ const Login = () => {
             <input
               ref={formRefs.name}
               type="text"
-              placeholder="Full Name"
+              placeholder={lang[langKey].fullName}
               aria-label="Full Name"
               className="p-4 w-full bg-gray-700 rounded"
               required
@@ -121,7 +125,7 @@ const Login = () => {
           <input
             ref={formRefs.email}
             type="email"
-            placeholder="Email Address"
+            placeholder={lang[langKey].email}
             aria-label="Email Address"
             className="p-4 w-full bg-gray-700 rounded"
             required
@@ -129,7 +133,7 @@ const Login = () => {
           <input
             ref={formRefs.password}
             type="password"
-            placeholder="Password"
+            placeholder={lang[langKey].password}
             aria-label="Password"
             className="p-4 w-full bg-gray-700 rounded"
             required
@@ -138,7 +142,7 @@ const Login = () => {
             <input
               ref={formRefs.confirmPassword}
               type="password"
-              placeholder="Confirm Password"
+              placeholder={lang[langKey].confirmPassword}
               aria-label="Confirm Password"
               className="p-4 w-full bg-gray-700 rounded"
               required
@@ -158,7 +162,7 @@ const Login = () => {
           disabled={isLoading}
           aria-label={isSignInForm ? "Sign In" : "Sign Up"}
         >
-          {isLoading ? "Processing..." : isSignInForm ? "Sign In" : "Sign Up"}
+          {isLoading ? lang[langKey].processing : isSignInForm ? lang[langKey].signIn : lang[langKey].signUp}
         </button>
 
         {/* Toggle Between Sign In & Sign Up */}
@@ -167,9 +171,9 @@ const Login = () => {
           onClick={toggleSignInForm}
           aria-label={isSignInForm ? "Switch to Sign Up" : "Switch to Sign In"}
         >
-          {isSignInForm ? "New to Netflix? " : "Have an account? "}
+          {isSignInForm ? lang[langKey].newToNetflix : lang[langKey].haveAnAccount }
           <span className="text-red-500 font-semibold hover:underline">
-            {isSignInForm ? "Sign Up Now" : "Sign In Now"}
+            {isSignInForm ? lang[langKey].signUp : lang[langKey].signIn}
           </span>
         </p>
       </form>
