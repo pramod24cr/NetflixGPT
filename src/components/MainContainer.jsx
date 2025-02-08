@@ -5,10 +5,11 @@ import VideoTitle from "./VideoTitle";
 const MainContainer = () => {
   const movies = useSelector((store) => store.movies?.nowPlayingMovies);
 
-  if (!movies) return;
+  if (!movies || movies.length === 0) {
+    return <div className="text-white text-center p-4">Loading...</div>;
+  }
 
   const mainMovie = movies[0];
-
   const { original_title, overview, id } = mainMovie;
 
   return (
@@ -18,4 +19,5 @@ const MainContainer = () => {
     </div>
   );
 };
+
 export default MainContainer;

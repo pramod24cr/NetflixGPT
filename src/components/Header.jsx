@@ -49,15 +49,16 @@ const Header = () => {
     // Toggle GPT Search
     dispatch(toggleGptSearchView());
   };
+
   const handleLanguageChange = (e) => {
     dispatch(changeLanguage(e.target.value));
   };
 
   return (
-    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between">
+    <div className="absolute w-screen px-4 md:px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row justify-between items-center">
       {/* Netflix Logo */}
       <img
-        className="w-44 mx-auto md:mx-0"
+        className="w-32 md:w-44 cursor-pointer transition-transform hover:scale-105"
         src={NETFLIX_LOGO}
         alt="Netflix Logo"
         onClick={() => navigate("/browse")}
@@ -66,11 +67,12 @@ const Header = () => {
 
       {/* User Profile & Sign Out */}
       {user && (
-        <div className="flex p-2 justify-between">
+        <div className="flex items-center gap-4 md:gap-6">
           {showGptSearch && (
             <select
-              className="p-2 m-2 bg-gray-900 text-white"
+              className="p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition"
               onChange={handleLanguageChange}
+              aria-label="Select Language"
             >
               {SUPPORTED_LANGUAGES.map((lang) => (
                 <option key={lang.identifier} value={lang.identifier}>
@@ -80,24 +82,27 @@ const Header = () => {
             </select>
           )}
           <button
-            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+            className="py-2 px-4 bg-gray-800 text-white rounded-lg hover:bg-gray-600 transition focus:outline-none focus:ring-2 focus:ring-white"
             onClick={handleGptSearchClick}
+            aria-label={showGptSearch ? "Go to Homepage" : "Enable GPT Search"}
           >
             {showGptSearch ? "Homepage" : "GPT Search"}
           </button>
-          <img
-            className="hidden md:block w-8 h-8 md:w-12 md:h-12 rounded-full border border-gray-400"
-            alt="User Icon"
-            src={user?.photoURL || "https://picsum.photos/200/300"}
-            aria-label="User Profile"
-          />
-          <button
-            onClick={handleSignOut}
-            className="px-3 py-1 md:px-4 md:py-2 rounded-md bg-red-600 hover:bg-red-700 transition text-white font-semibold text-sm md:text-base"
-            aria-label="Sign Out"
-          >
-            Sign Out
-          </button>
+          <div className="flex items-center gap-2">
+            <img
+              className="w-8 h-8 md:w-10 md:h-10 rounded-full border-2 border-gray-400 hover:border-gray-300 transition"
+              alt="User Icon"
+              src={user?.photoURL || "https://picsum.photos/200/300"}
+              aria-label="User Profile"
+            />
+            <button
+              onClick={handleSignOut}
+              className="py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-white"
+              aria-label="Sign Out"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       )}
     </div>
