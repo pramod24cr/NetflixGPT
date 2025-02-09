@@ -25,10 +25,11 @@ const lang = {
     processing: "Processing...",
 
     //MovieDetails
-    play: "Play",
+    playTrailer: "Play Trailer",
     added: "Added",
 
     //VideoTitle
+    play: "Play",
     moreInfo: "More Info",
 
     // Watchlist
@@ -62,10 +63,11 @@ const lang = {
     processing: "ಸಂಸ್ಕರಣೆ...",
 
     //MovieDetails
-    play: "ಪ್ಲೇ",
+    playTrailer: "ಪ್ಲೇ ಟ್ರೈಲರ್",
     added: "ಸೇರಿಸಲಾಗಿದೆ",
 
     //VideoTitle
+    play: "ಪ್ಲೇ",
     moreInfo: "ಹೆಚ್ಚಿನ ಮಾಹಿತಿ",
 
     // Watchlist

@@ -16,8 +16,8 @@ const MovieDetails = () => {
   const watchlist = useSelector((store) => store.movies.watchlist);
   const { movieDetails, loading, error } = useMovieDetails(selectedMovie?.id);
   const langKey = useSelector((store) => store.config.lang);
-  const trailerKey = useMovieTrailer(selectedMovie?.id); // Fetch trailer
-  const [showTrailer, setShowTrailer] = useState(false); // State for trailer
+  const trailerKey = useMovieTrailer(selectedMovie?.id);
+  const [showTrailer, setShowTrailer] = useState(false);
 
   if (!selectedMovie) return null;
   if (loading)
@@ -28,34 +28,36 @@ const MovieDetails = () => {
   const isWatchlisted = watchlist.some((movie) => movie.id === id);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-lg flex justify-center items-center p-4 z-50 overflow-y-auto">
-      <div className="relative bg-gray-900 text-white rounded-lg shadow-xl p-6 w-full max-w-3xl md:max-w-4xl">
-        {/* Close Button */}
-        <button
-          className="absolute top-4 right-4 bg-gray-700 p-2 rounded-full hover:bg-red-600 transition focus:outline-none"
-          onClick={() => dispatch(addSelectedMovie(null))}
-          aria-label="Close Movie Details"
-        >
-          <X size={24} className="text-white" />
-        </button>
+    <div className="fixed inset-0 backdrop-blur-lg flex justify-center items-center p-4 z-50 overflow-y-auto">
+   
+      <div className="relative bg-gray-800 text-white rounded-lg shadow-xl p-6 w-full max-w-3xl md:max-w-4xl">
+  {/* Close Button (Always Visible) */}
+  <button
+    className="absolute top-4 right-4 bg-gray-700 p-2 rounded-full hover:bg-red-600 transition focus:outline-none"
+    onClick={() => dispatch(addSelectedMovie(null))}
+    aria-label="Close Movie Details"
+  >
+    <X size={24} className="text-white" />
+  </button>
 
-        <div className="flex flex-col md:flex-row gap-6">
-          {/* Poster (Hide when trailer is playing) */}
-          {!showTrailer && (
-            <img
-              className="w-full md:w-1/3 lg:w-1/4 rounded-lg shadow-lg object-cover"
-              src={
-                poster_path
-                  ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                  : "https://picsum.photos/500/750"
-              }
-              alt={title || "Movie Poster"}
-              aria-label="Movie Poster"
-            />
-          )}
+  {/* Poster and Movie Details */}
+  <div className="flex flex-col items-center md:flex-row gap-6">
+    {/* Poster (Hidden when trailer is playing) */}
+    {!showTrailer && (
+      <img
+        className="w-1/2 md:w-1/3 rounded-lg shadow-lg object-cover mx-auto"
+        src={
+          poster_path
+            ? `https://image.tmdb.org/t/p/w500${poster_path}`
+            : "https://picsum.photos/500/750"
+        }
+        alt={title || "Movie Poster"}
+        aria-label="Movie Poster"
+      />
+    )}
 
           {/* Movie Details */}
-          <div className="flex-1">
+          <div className="flex-1 text-center md:text-left">
             <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2">{title}</h2>
             <p className="text-gray-300 text-sm md:text-base mb-4">
               {overview || "No overview available."}
@@ -86,7 +88,7 @@ const MovieDetails = () => {
 
                 {/* Close Trailer Button */}
                 <button
-                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg transition focus:ring-2 focus:ring-red-400"
+                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg transition focus:ring-2 focus:ring-white"
                   onClick={() => setShowTrailer(false)}
                 >
                   Close Trailer
@@ -96,11 +98,11 @@ const MovieDetails = () => {
               <div className="mt-6 flex flex-col sm:flex-row gap-4">
                 {/* Play Button */}
                 <button
-                  className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition focus:ring-2 focus:ring-red-400"
+                  className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition focus:ring-2 focus:ring-white"
                   onClick={() => setShowTrailer(true)}
                   disabled={!trailerKey}
                 >
-                  <Play size={20} /> {trailerKey ? lang[langKey].play : "Trailer Not Available"}
+                  <Play size={20} /> {trailerKey ? lang[langKey].playTrailer : "Trailer Not Available"}
                 </button>
 
                 {/* Watchlist Button */}

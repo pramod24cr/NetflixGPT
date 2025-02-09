@@ -25,7 +25,7 @@ const Watchlist = () => {
   return (
     <div className="relative min-h-screen text-white flex flex-col items-center justify-center px-6">
       {/* Background Image */}
-      <div className="fixed -z-10 w-full h-full">
+      <div className="fixed inset-0 -z-10 w-full h-full">
         <img
           className="w-full h-full object-cover opacity-80"
           src={NETFLIX_BACKGROUND}
@@ -37,7 +37,7 @@ const Watchlist = () => {
       </div>
 
       {/* Watchlist Title */}
-      <h1 className="text-4xl font-extrabold text-center mb-8">
+      <h1 className="pt-[20%] md:pt-0 text-4xl font-extrabold text-center mb-8">
         {lang[langKey].yourWatchlist}
       </h1>
 
