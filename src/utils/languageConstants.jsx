@@ -16,7 +16,7 @@ const lang = {
     //Login
     signIn: "Sign In",
     signUp: "Sign Up",
-    fullName:"Full Name",
+    fullName: "Full Name",
     email: "Email Address",
     password: "Password",
     confirmPassword: "Confirm Password",
@@ -44,7 +44,7 @@ const lang = {
     search: "ಹುಡುಕು",
     gptSearchPlaceholder: "ನೀವು ಇಂದು ಏನನ್ನು ವೀಕ್ಷಿಸಲು ಬಯಸುತ್ತೀರಿ?",
     searching: "ಹುಡುಕುತ್ತಿದ್ದೇನೆ...",
-  
+
     //Header
     askGPT: "GPT ಕೇಳಿ",
     watchlist: "ವೀಕ್ಷಣೆ ಪಟ್ಟಿ",
@@ -53,7 +53,7 @@ const lang = {
     //Login
     signIn: "ಸೈನ್ ಇನ್",
     signUp: "ಸೈನ್ ಅಪ್",
-    fullName:"ಪೂರ್ಣ ಹೆಸರು",
+    fullName: "ಪೂರ್ಣ ಹೆಸರು",
     email: "ಇಮೇಲ್ ವಿಳಾಸ",
     password: "ಪಾಸ್ವರ್ಡ್",
     confirmPassword: "ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ದೃಢೀಕರಿಸಿ",
@@ -71,8 +71,6 @@ const lang = {
     // Watchlist
     yourWatchlist: "ನಿಮ್ಮ ವೀಕ್ಷಣೆ ಪಟ್ಟಿ",
     emptyWatchlist: "ನಿಮ್ಮ ವೀಕ್ಷಣೆ ಪಟ್ಟಿಗೆ ಯಾವುದೇ ಚಲನಚಿತ್ರಗಳನ್ನು ಸೇರಿಸಲಾಗಿಲ್ಲ.",
-
   },
 };
 export default lang;
-

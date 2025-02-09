@@ -3,7 +3,7 @@ import Browse from "./Browse";
 import Login from "./Login";
 import GPTSearch from "./GptSearch";
 import Watchlist from "./Watchlist";
-import Layout from "./Layout"; // Import Layout component
+import Layout from "./Layout";
 
 const appRouter = createBrowserRouter([
   {
@@ -12,7 +12,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Layout />, // Wrap all routes with Layout
+    element: <Layout />,
     children: [
       { path: "browse", element: <Browse /> },
       { path: "watchlist", element: <Watchlist /> },

@@ -21,7 +21,7 @@ const Browse = () => {
   return (
     <div>
       <Header />
-      {selectedMovie ? ( 
+      {selectedMovie ? (
         <MovieDetails movie={selectedMovie} />
       ) : (
         <>

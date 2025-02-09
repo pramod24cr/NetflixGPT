@@ -9,7 +9,6 @@ export const USER_AVATAR =
 
 export const MOVIE_IMG_CDN = "https://image.tmdb.org/t/p/w500";
 
-
 export const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 
 export const API_OPTIONS = {
@@ -20,10 +19,7 @@ export const API_OPTIONS = {
   },
 };
 
-
 export const SUPPORTED_LANGUAGES = [
   { identifier: "en", name: "English" },
   { identifier: "kn", name: "ಕನ್ನಡ" },
 ];
-
-

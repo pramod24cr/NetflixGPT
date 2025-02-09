@@ -18,7 +18,7 @@ const useMovieDetails = (movieId) => {
         const data = await response.json();
         setMovieDetails(data);
       } catch (err) {
-        setError("Failed to fetch movie details." +{err});
+        setError("Failed to fetch movie details." + { err });
       } finally {
         setLoading(false);
       }

@@ -7,12 +7,11 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useDispatch, useSelector  } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { USER_AVATAR, NETFLIX_BACKGROUND } from "../utils/constants";
 import { getAuthErrorMessage } from "../utils/errorMessages";
 import lang from "../utils/languageConstants";
-
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -20,7 +19,6 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang);
-
 
   const formRefs = {
     name: useRef(null),
@@ -54,7 +52,11 @@ const Login = () => {
     try {
       if (!isSignInForm) {
         // Sign Up Logic
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         const user = userCredential.user;
 
         await updateProfile(user, {
@@ -73,7 +75,11 @@ const Login = () => {
         );
       } else {
         // Sign In Logic
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         console.log("Signed in user:", userCredential.user);
       }
     } catch (error) {
@@ -162,7 +168,11 @@ const Login = () => {
           disabled={isLoading}
           aria-label={isSignInForm ? "Sign In" : "Sign Up"}
         >
-          {isLoading ? lang[langKey].processing : isSignInForm ? lang[langKey].signIn : lang[langKey].signUp}
+          {isLoading
+            ? lang[langKey].processing
+            : isSignInForm
+            ? lang[langKey].signIn
+            : lang[langKey].signUp}
         </button>
 
         {/* Toggle Between Sign In & Sign Up */}
@@ -171,7 +181,9 @@ const Login = () => {
           onClick={toggleSignInForm}
           aria-label={isSignInForm ? "Switch to Sign Up" : "Switch to Sign In"}
         >
-          {isSignInForm ? lang[langKey].newToNetflix : lang[langKey].haveAnAccount }
+          {isSignInForm
+            ? lang[langKey].newToNetflix
+            : lang[langKey].haveAnAccount}
           <span className="text-red-500 font-semibold hover:underline">
             {isSignInForm ? lang[langKey].signUp : lang[langKey].signIn}
           </span>

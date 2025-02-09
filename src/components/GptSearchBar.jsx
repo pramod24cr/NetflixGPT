@@ -22,12 +22,12 @@ const GptSearchBar = () => {
         API_OPTIONS
       );
       const json = await response.json();
-  
+
       // Find exact match and return only the first one
       const exactMatch = json.results.find(
         (item) => item.title.toLowerCase() === movie.toLowerCase()
       );
-  
+
       return exactMatch ? [exactMatch] : [];
     } catch (error) {
       console.error("TMDB API Error:", error);
@@ -35,8 +35,7 @@ const GptSearchBar = () => {
       return [];
     }
   };
-  
-  
+
   const handleGptSearchClick = async () => {
     const query = searchText.current.value.trim();
     if (!query) {
@@ -62,7 +61,9 @@ const GptSearchBar = () => {
       const gptMovies = gptResults.choices[0].message.content.split(",");
 
       // For each movie, search TMDB API
-      const promiseArray = gptMovies.map((movie) => searchMovieTMDB(movie.trim()));
+      const promiseArray = gptMovies.map((movie) =>
+        searchMovieTMDB(movie.trim())
+      );
       const tmdbResults = await Promise.all(promiseArray);
 
       dispatch(

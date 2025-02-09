@@ -27,7 +27,7 @@ const Watchlist = () => {
       {/* Background Image */}
       <div className="fixed -z-10 w-full h-full">
         <img
-          className="w-full h-full object-cover opacity-80" // Reduced opacity for a softer effect
+          className="w-full h-full object-cover opacity-80"
           src={NETFLIX_BACKGROUND}
           alt="Netflix Background"
           aria-label="Netflix Background"
@@ -37,7 +37,9 @@ const Watchlist = () => {
       </div>
 
       {/* Watchlist Title */}
-      <h1 className="text-4xl font-extrabold text-center mb-8">{lang[langKey].yourWatchlist}</h1>
+      <h1 className="text-4xl font-extrabold text-center mb-8">
+        {lang[langKey].yourWatchlist}
+      </h1>
 
       {/* Watchlist Movies */}
       {watchlist.length === 0 ? (
@@ -48,14 +50,16 @@ const Watchlist = () => {
             <div
               key={movie.id}
               className="bg-gray-800 p-4 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105"
-              onClick={() => dispatch(addSelectedMovie(movie))} // Open MovieDetails
+              onClick={() => dispatch(addSelectedMovie(movie))}
             >
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 className="w-full aspect-[2/3] object-cover rounded-lg"
               />
-              <h2 className="text-lg font-semibold mt-2 text-center">{movie.title}</h2>
+              <h2 className="text-lg font-semibold mt-2 text-center">
+                {movie.title}
+              </h2>
             </div>
           ))}
         </div>

@@ -4,7 +4,6 @@ import MovieList from "./MovieList";
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
 
-  // Define the list of movie categories to render
   const movieCategories = [
     { title: "Now Playing", movies: movies?.nowPlayingMovies },
     { title: "Trending", movies: movies?.trendingMovies },

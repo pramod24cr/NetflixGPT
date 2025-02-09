@@ -10,13 +10,14 @@ const GptMovieSuggestions = () => {
   const selectedMovie = useSelector((store) => store.movies.selectedMovie);
   const langKey = useSelector((store) => store.config.lang);
 
-  // If no search has been made, do not show anything
   if (!movieNames || movieNames.length === 0) return null;
 
   return (
     <div className="p-6 m-6 bg-black/90 text-white rounded-lg shadow-xl border border-gray-700">
       {movieResults.length === 0 ? (
-        <p className="text-gray-300 text-lg text-center">{lang[langKey].noResults}</p>
+        <p className="text-gray-300 text-lg text-center">
+          {lang[langKey].noResults}
+        </p>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full">
           {movieResults.flat().map((movie) => (
