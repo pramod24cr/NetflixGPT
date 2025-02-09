@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useMovieDetails from "../hooks/useMovieDetails";
+import useMovieTrailer from "../hooks/useMovieTrailer";
 import { X, Play, Bookmark, BookmarkCheck } from "lucide-react";
 import {
   addSelectedMovie,
@@ -14,21 +16,15 @@ const MovieDetails = () => {
   const watchlist = useSelector((store) => store.movies.watchlist);
   const { movieDetails, loading, error } = useMovieDetails(selectedMovie?.id);
   const langKey = useSelector((store) => store.config.lang);
+  const trailerKey = useMovieTrailer(selectedMovie?.id); // Fetch trailer
+  const [showTrailer, setShowTrailer] = useState(false); // State for trailer
 
   if (!selectedMovie) return null;
   if (loading)
     return <p className="text-white text-center">Loading movie details...</p>;
   if (error) return <p className="text-red-500 text-center">{error}</p>;
 
-  const {
-    id,
-    poster_path,
-    title,
-    overview,
-    genres,
-    release_date,
-    vote_average,
-  } = movieDetails;
+  const { id, poster_path, title, overview, genres, release_date, vote_average } = movieDetails;
   const isWatchlisted = watchlist.some((movie) => movie.id === id);
 
   return (
@@ -43,19 +39,20 @@ const MovieDetails = () => {
           <X size={24} className="text-white" />
         </button>
 
-        {/* Movie Content */}
         <div className="flex flex-col md:flex-row gap-6">
-          {/* Movie Poster */}
-          <img
-            className="w-full md:w-1/3 lg:w-1/4 rounded-lg shadow-lg object-cover"
-            src={
-              poster_path
-                ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                : "https://picsum.photos/500/750"
-            }
-            alt={title || "Movie Poster"}
-            aria-label="Movie Poster"
-          />
+          {/* Poster (Hide when trailer is playing) */}
+          {!showTrailer && (
+            <img
+              className="w-full md:w-1/3 lg:w-1/4 rounded-lg shadow-lg object-cover"
+              src={
+                poster_path
+                  ? `https://image.tmdb.org/t/p/w500${poster_path}`
+                  : "https://picsum.photos/500/750"
+              }
+              alt={title || "Movie Poster"}
+              aria-label="Movie Poster"
+            />
+          )}
 
           {/* Movie Details */}
           <div className="flex-1">
@@ -76,31 +73,56 @@ const MovieDetails = () => {
               </p>
             </div>
 
-            {/* Action Buttons */}
-            <div className="mt-6 flex flex-col sm:flex-row gap-4">
-              {/* Play Button */}
-              <button
-                className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition focus:ring-2 focus:ring-red-400"
-                onClick={() => window.open(`https://www.youtube.com/results?search_query=${title}+trailer`, "_blank")}
-              >
-                <Play size={20} /> {lang[langKey].play}
-              </button>
+            {/* Trailer Embed (Only show when Play is clicked) */}
+            {showTrailer && trailerKey ? (
+              <div className="relative w-full h-56 md:h-64 lg:h-72 mt-4">
+                <iframe
+                  className="w-full h-full rounded-lg shadow-lg"
+                  src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                  title="Movie Trailer"
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                ></iframe>
 
-              {/* Watchlist Button */}
-              <button
-                className={`w-full sm:w-auto px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition focus:ring-2 ${isWatchlisted ? "bg-green-600 hover:bg-green-700 text-white" : "bg-gray-700 hover:bg-gray-800 text-gray-300"}`}
-                onClick={() => {
-                  if (isWatchlisted) {
-                    dispatch(removeFromWatchlist(id));
-                  } else {
-                    dispatch(addToWatchlist(movieDetails));
-                  }
-                }}
-              >
-                {isWatchlisted ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
-                {isWatchlisted ? lang[langKey].added : lang[langKey].watchlist}
-              </button>
-            </div>
+                {/* Close Trailer Button */}
+                <button
+                  className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg transition focus:ring-2 focus:ring-red-400"
+                  onClick={() => setShowTrailer(false)}
+                >
+                  Close Trailer
+                </button>
+              </div>
+            ) : (
+              <div className="mt-6 flex flex-col sm:flex-row gap-4">
+                {/* Play Button */}
+                <button
+                  className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition focus:ring-2 focus:ring-red-400"
+                  onClick={() => setShowTrailer(true)}
+                  disabled={!trailerKey}
+                >
+                  <Play size={20} /> {trailerKey ? lang[langKey].play : "Trailer Not Available"}
+                </button>
+
+                {/* Watchlist Button */}
+                <button
+                  className={`w-full sm:w-auto px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition focus:ring-2 ${
+                    isWatchlisted
+                      ? "bg-green-600 hover:bg-green-700 text-white"
+                      : "bg-gray-700 hover:bg-gray-800 text-gray-300"
+                  }`}
+                  onClick={() => {
+                    if (isWatchlisted) {
+                      dispatch(removeFromWatchlist(id));
+                    } else {
+                      dispatch(addToWatchlist(movieDetails));
+                    }
+                  }}
+                >
+                  {isWatchlisted ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
+                  {isWatchlisted ? lang[langKey].added : lang[langKey].watchlist}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

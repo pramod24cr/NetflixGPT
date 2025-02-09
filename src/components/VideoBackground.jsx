@@ -1,12 +1,10 @@
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 
 const VideoBackground = ({ movieId }) => {
-  useMovieTrailer(movieId);
-  const trailerVideo = useSelector((store) => store.movies?.trailerVideo);
+  const trailerKey = useMovieTrailer(movieId);
 
-  if (!trailerVideo) {
+  if (!trailerKey) {
     return (
       <div className="w-screen aspect-video bg-black flex items-center justify-center">
         <p className="text-white text-lg">Loading trailer...</p>
@@ -18,7 +16,7 @@ const VideoBackground = ({ movieId }) => {
     <div className="w-screen aspect-video">
       <iframe
         className="w-full h-full"
-        src={`https://www.youtube.com/embed/${trailerVideo.key}?autoplay=1&controls=0&loop=1&mute=1&playlist=${trailerVideo.key}`}
+        src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&controls=0&loop=1&mute=1&playlist=${trailerKey}`}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
@@ -27,6 +25,7 @@ const VideoBackground = ({ movieId }) => {
     </div>
   );
 };
+
 
 VideoBackground.propTypes = {
   movieId: PropTypes.number.isRequired,
