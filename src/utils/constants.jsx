@@ -5,8 +5,7 @@ export const NETFLIX_BACKGROUND =
   "https://assets.nflxext.com/ffe/siteui/vlv3/fb5cb900-0cb6-4728-beb5-579b9af98fdd/web/IN-en-20250127-TRIFECTA-perspective_cf66f5a3-d894-4185-9106-5f45502fc387_medium.jpg";
 
 export const USER_AVATAR =
-  "https://occ-0-6247-2164.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABdpkabKqQAxyWzo6QW_ZnPz1IZLqlmNfK-t4L1VIeV1DY00JhLo_LMVFp936keDxj-V5UELAVJrU--iUUY2MaDxQSSO-0qw.png?r=e6e";
-
+  "https://picsum.photos/500/750"
 export const MOVIE_IMG_CDN = "https://image.tmdb.org/t/p/w500";
 
 export const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;

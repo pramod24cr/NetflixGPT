@@ -19,19 +19,22 @@ const Watchlist = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem("watchlist", JSON.stringify(watchlist));
+    if (watchlist.length > 0) {
+      localStorage.setItem("watchlist", JSON.stringify(watchlist));
+    }
   }, [watchlist]);
 
   return (
     <div className="relative min-h-screen text-white flex flex-col items-center justify-center px-6">
       {/* Background Image */}
-      <div className="fixed inset-0 -z-10 w-full h-full">
+      <div className="absolute inset-0 -z-10 w-full h-full">
         <img
           className="w-full h-full object-cover opacity-80"
           src={NETFLIX_BACKGROUND}
           alt="Netflix Background"
-          aria-label="Netflix Background"
+          aria-hidden="true"
         />
+
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black opacity-80"></div>
       </div>
@@ -47,20 +50,21 @@ const Watchlist = () => {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 w-full max-w-6xl">
           {watchlist.map((movie) => (
-            <div
+            <button
               key={movie.id}
               className="bg-gray-800 p-4 rounded-lg shadow-lg cursor-pointer transition-transform transform hover:scale-105"
               onClick={() => dispatch(addSelectedMovie(movie))}
+              aria-label={`View details for ${movie.title}`}
             >
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
+                alt={`Poster of ${movie.title}`}
                 className="w-full aspect-[2/3] object-cover rounded-lg"
               />
               <h2 className="text-lg font-semibold mt-2 text-center">
                 {movie.title}
               </h2>
-            </div>
+            </button>
           ))}
         </div>
       )}

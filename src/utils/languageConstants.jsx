@@ -1,6 +1,7 @@
 const lang = {
   en: {
     //GptMovieSuggestions
+    noResult: "No Result, Try again later.",
     clearResults: "Clear Results",
 
     // GptSearchBar
@@ -39,6 +40,7 @@ const lang = {
 
   kn: {
     //GptMovieSuggestions
+    noResult: "ಯಾವುದೇ ಫಲಿತಾಂಶವಿಲ್ಲ, ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
     clearResults: "ಫಲಿತಾಂಶಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ",
 
     // GptSearchBar

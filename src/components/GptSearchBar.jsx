@@ -10,7 +10,6 @@ const GptSearchBar = () => {
   const langKey = useSelector((store) => store.config.lang);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const searchText = useRef(null);
 
   const searchMovieTMDB = async (movie) => {
@@ -23,7 +22,7 @@ const GptSearchBar = () => {
       );
       const json = await response.json();
 
-      // Find exact match and return only the first one
+      // Find the exact match in TMDB results and return only the first one
       const exactMatch = json.results.find(
         (item) => item.title.toLowerCase() === movie.toLowerCase()
       );
@@ -47,7 +46,7 @@ const GptSearchBar = () => {
     setError(null);
 
     try {
-      // Make an API call to GPT API and get Movie Results
+      // Generate a GPT query for movie recommendations
       const gptQuery = `Act as a Movie Recommendation system and suggest some movies for the query: ${query}. Only give me names of 5 movies, comma-separated like the example result given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya`;
       const gptResults = await client.chat.completions.create({
         messages: [{ role: "user", content: gptQuery }],
@@ -58,9 +57,10 @@ const GptSearchBar = () => {
         throw new Error("No results found from GPT API.");
       }
 
+      // Extract movie names from GPT response
       const gptMovies = gptResults.choices[0].message.content.split(",");
 
-      // For each movie, search TMDB API
+      // Iterate over the GPT movie results and fetch additional details from TMDB API
       const promiseArray = gptMovies.map((movie) =>
         searchMovieTMDB(movie.trim())
       );

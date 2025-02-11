@@ -17,6 +17,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const langKey = useSelector((store) => store.config.lang);
 
+  // Handles user logout
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {})
@@ -25,6 +26,7 @@ const Header = () => {
       });
   };
 
+  // Tracks authentication state and updates Redux
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -40,13 +42,9 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleLanguageChange = (e) => {
-    dispatch(changeLanguage(e.target.value));
-  };
-
   return (
     <div className="absolute w-full px-4 md:px-8 py-3 bg-gradient-to-b from-black z-10 flex justify-between items-center">
-      {/* Netflix Logo */}
+      {/* Netflix Logo - Click to go to home */}
       <img
         className="w-32 md:w-44 cursor-pointer transition-transform hover:scale-105"
         src={NETFLIX_LOGO}
@@ -75,7 +73,7 @@ const Header = () => {
             {/* Language Selector */}
             <select
               className="p-2 bg-gray-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white transition"
-              onChange={handleLanguageChange}
+              onChange={(e) => dispatch(changeLanguage(e.target.value))}
               value={langKey}
               aria-label="Select Language"
             >

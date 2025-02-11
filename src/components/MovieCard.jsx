@@ -7,13 +7,11 @@ const MovieCard = ({ posterPath }) => {
   return (
     <div className="w-36 md:w-48 pr-4 transition-transform duration-300 hover:scale-105">
       <img
-        alt="Movie Card"
+        alt={posterPath ? "Movie Poster" : "Placeholder Image"}
         src={MOVIE_IMG_CDN + posterPath}
         className="w-full h-auto rounded-lg shadow-lg"
-        aria-label="Movie Poster"
-        role="img"
         onError={(e) => {
-          e.target.src = "https://picsum.photos/200/300";
+          e.target.src = "/assets/placeholder.png";
         }}
       />
     </div>

@@ -10,15 +10,22 @@ const useMovieDetails = (movieId) => {
     if (!movieId) return;
 
     const getMovieDetails = async () => {
+      setError(null);
+
       try {
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
           API_OPTIONS
         );
+
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
         const data = await response.json();
         setMovieDetails(data);
       } catch (err) {
-        setError("Failed to fetch movie details." + { err });
+        setError(`Failed to fetch movie details: ${err.message}`);
       } finally {
         setLoading(false);
       }

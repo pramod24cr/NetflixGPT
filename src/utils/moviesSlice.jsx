@@ -6,7 +6,8 @@ const storedWatchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 const moviesSlice = createSlice({
   name: "movies",
   initialState: {
-    trailerVideo: null,
+    backgroundTrailer: null,
+    movieDetailsTrailer: null,
     nowPlayingMovies: null,
     trendingMovies: null,
     topRatedMovies: null,
@@ -16,8 +17,11 @@ const moviesSlice = createSlice({
     watchlist: storedWatchlist,
   },
   reducers: {
-    addTrailerVideo: (state, action) => {
-      state.trailerVideo = action.payload;
+    setBackgroundTrailer: (state, action) => {
+      state.backgroundTrailer = action.payload;
+    },
+    setMovieDetailsTrailer: (state, action) => {
+      state.movieDetailsTrailer = action.payload;
     },
     addNowPlayingMovies: (state, action) => {
       state.nowPlayingMovies = action.payload;
@@ -55,7 +59,8 @@ const moviesSlice = createSlice({
 });
 
 export const {
-  addTrailerVideo,
+  setBackgroundTrailer,
+  setMovieDetailsTrailer,
   addNowPlayingMovies,
   addTrendingMovies,
   addTopRatedMovies,

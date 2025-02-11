@@ -75,15 +75,9 @@ const Login = () => {
         );
       } else {
         // Sign In Logic
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        console.log("Signed in user:", userCredential.user);
+        await signInWithEmailAndPassword(auth, email, password);
       }
     } catch (error) {
-      console.error("Firebase Auth Error:", error);
       setErrorMessage(getAuthErrorMessage(error.code));
     } finally {
       setIsLoading(false);

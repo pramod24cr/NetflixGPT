@@ -10,6 +10,7 @@ const GptMovieSuggestions = () => {
   const selectedMovie = useSelector((store) => store.movies.selectedMovie);
   const langKey = useSelector((store) => store.config.lang);
 
+  // If no movie names exist, don't render anything
   if (!movieNames || movieNames.length === 0) return null;
 
   return (
@@ -20,17 +21,21 @@ const GptMovieSuggestions = () => {
         </p>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full">
+          {/* Loop through the movie results and render each movie card */}
           {movieResults.flat().map((movie) => (
             <div
               key={movie.id}
               className="bg-gray-800 p-3 rounded-xl shadow-lg cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl hover:border-white border border-transparent w-full"
               onClick={() => dispatch(addSelectedMovie(movie))}
             >
+              {/* Movie poster */}
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 className="w-full aspect-[2/3] object-cover rounded-lg"
               />
+
+              {/* Movie title */}
               <h2 className="text-lg font-semibold mt-2 text-center text-gray-200 hover:text-white transition">
                 {movie.title}
               </h2>
@@ -39,7 +44,7 @@ const GptMovieSuggestions = () => {
         </div>
       )}
 
-      {/* Clear Button */}
+      {/* Button to clear search results */}
       <div className="flex justify-center mt-6">
         <button
           className="px-6 py-3 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-full transition-all duration-300 ease-in-out shadow-lg focus:outline-none focus:ring-2 focus:ring-red-500"
