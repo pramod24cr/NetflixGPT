@@ -12,6 +12,7 @@ import { addUser } from "../utils/userSlice";
 import { USER_AVATAR, NETFLIX_BACKGROUND } from "../utils/constants";
 import { getAuthErrorMessage } from "../utils/errorMessages";
 import lang from "../utils/languageConstants";
+import NetflixSound from "/assets/netflix-ta-dum.mp3";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -25,6 +26,11 @@ const Login = () => {
     email: useRef(null),
     password: useRef(null),
     confirmPassword: useRef(null),
+  };
+
+  const playNetflixSound = () => {
+    const audio = new Audio(NetflixSound);
+    audio.play();
   };
 
   const handleButtonClick = async () => {
@@ -77,6 +83,7 @@ const Login = () => {
         // Sign In Logic
         await signInWithEmailAndPassword(auth, email, password);
       }
+      playNetflixSound();
     } catch (error) {
       setErrorMessage(getAuthErrorMessage(error.code));
     } finally {
@@ -104,7 +111,7 @@ const Login = () => {
       {/* Form Container */}
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-full md:w-3/12 absolute p-8 md:p-12 bg-black/80 text-white rounded-lg my-24 mx-auto right-0 left-0"
+        className="w-full md:w-4/12 absolute p-8 md:p-12 bg-black/80 text-white rounded-lg my-24 mx-auto right-0 left-0  max-h-[80vh] overflow-y-auto"
       >
         <h1 className="font-bold text-3xl py-4 text-center">
           {isSignInForm ? lang[langKey].signIn : lang[langKey].signUp}

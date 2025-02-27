@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import useMovieDetails from "../hooks/useMovieDetails";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 import { X, Play, Bookmark, BookmarkCheck } from "lucide-react";
-import { addSelectedMovie, addToWatchlist, removeFromWatchlist,} from "../utils/moviesSlice";
+import {
+  addSelectedMovie,
+  addToWatchlist,
+  removeFromWatchlist,
+} from "../utils/moviesSlice";
 import lang from "../utils/languageConstants";
 import PropTypes from "prop-types";
 
@@ -130,7 +134,7 @@ const MovieDetailsContent = ({
           <div className="relative w-full h-56 md:h-64 lg:h-72 mt-4">
             <iframe
               className="w-full h-full rounded-lg shadow-lg"
-              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1&rel=0`}
               title="Movie Trailer"
               allow="autoplay; encrypted-media"
               allowFullScreen
